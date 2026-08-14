@@ -1,0 +1,18 @@
+# Merge this source into the deployment's existing overlays.sources list.
+# Keep the base Centaur source before it and the organization's own overlay
+# after it so organization-specific behavior can override shared integrations.
+overlays:
+  sources:
+    - repo: Ambush-AI/centaur-overlay
+      ref: main # Pin a release tag or commit SHA in production.
+      visibility: public
+      toolsSubdir: tools
+      workflowsSubdir: ""
+      skillsSubdir: .agents/skills
+
+# Only add this entry when the deployment already uses TOOL_ALLOWLIST. Merge
+# ambush-streams into the existing comma-separated value; do not replace the
+# other enabled tools with this example.
+sandbox:
+  extraEnv:
+    TOOL_ALLOWLIST: ambush-streams
