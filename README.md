@@ -5,18 +5,6 @@ The official [Ambush Streams](https://ambush.ai) overlay for
 update, pause, resume, and permanently delete shared news streams, and review
 their emitted news items.
 
-This repository is intentionally separate from the other Ambush distribution
-formats:
-
-- [Ambush-AI/codex-plugins](https://github.com/Ambush-AI/codex-plugins) is the
-  Codex plugin marketplace and uses per-user OAuth.
-- [Ambush-AI/claude-plugins](https://github.com/Ambush-AI/claude-plugins) is the
-  Claude Code plugin marketplace and uses per-user OAuth.
-- [Ambush-AI/ambush-stream-skills](https://github.com/Ambush-AI/ambush-stream-skills)
-  publishes the standalone agent skill.
-- This repository is a deployment-level Centaur overlay. A Centaur operator
-  installs it once and grants its credential to selected users or channels.
-
 ## What gets installed
 
 ```text
