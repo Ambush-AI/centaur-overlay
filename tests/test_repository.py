@@ -48,6 +48,8 @@ def test_install_docs_cover_credential_allowlist_grant_and_verification() -> Non
     ):
         assert required in readme
     assert "repo: Ambush-AI/centaur-overlay" in values
+    assert "ref: v0.1.0" in readme
+    assert "ref: v0.1.0" in values
     assert 'workflowsSubdir: ""' in values
     assert "skillsSubdir: .agents/skills" in values
 

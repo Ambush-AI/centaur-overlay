@@ -29,3 +29,26 @@ jobs:
         run: |
           python -m pip install tools/productivity/ambush-streams
           ambush-streams --help
+
+  centaur-compatibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check out current Centaur read-only
+        uses: actions/checkout@v4
+        with:
+          repository: paradigmxyz/centaur
+          path: .centaur-readonly
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Build and install the overlay tool with the current Centaur SDK
+        run: |
+          python -m pip install --upgrade build uv
+          python -m build --outdir dist tools/productivity/ambush-streams
+          python -m pip install dist/*.whl
+      - name: Verify Centaur discovery, SDK behavior, and CLI startup
+        env:
+          CENTAUR_CHECKOUT: ${{ github.workspace }}/.centaur-readonly
+        run: python tests/centaur_compatibility.py

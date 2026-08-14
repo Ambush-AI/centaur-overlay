@@ -4,7 +4,7 @@
 overlays:
   sources:
     - repo: Ambush-AI/centaur-overlay
-      ref: main # Pin a release tag or commit SHA in production.
+      ref: v0.1.0
       visibility: public
       toolsSubdir: tools
       workflowsSubdir: ""
