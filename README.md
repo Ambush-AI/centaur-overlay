@@ -46,7 +46,7 @@ overlays:
       ref: <your-pinned-centaur-ref>
 
     - repo: Ambush-AI/centaur-overlay
-      ref: main
+      ref: v0.1.0
       visibility: public
       toolsSubdir: tools
       workflowsSubdir: ""
@@ -56,9 +56,10 @@ overlays:
       ref: main
 ```
 
-For a reproducible production rollout, replace `main` with a release tag or
-commit SHA. See [`examples/centaur-values.yaml`](examples/centaur-values.yaml)
-for a copyable fragment.
+`v0.1.0` is the stable, immutable overlay release. Track `main` only when you
+deliberately want unreleased changes. See
+[`examples/centaur-values.yaml`](examples/centaur-values.yaml) for a copyable
+fragment.
 
 ### 3. Store the credential
 
