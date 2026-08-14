@@ -1,0 +1,31 @@
+name: Test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install test dependencies
+        run: python -m pip install --upgrade build httpx pytest rich typer
+      - name: Run tests
+        run: pytest -q
+      - name: Build the Centaur tool
+        run: python -m build tools/productivity/ambush-streams
+      - name: Install and inspect the CLI
+        run: |
+          python -m pip install tools/productivity/ambush-streams
+          ambush-streams --help
