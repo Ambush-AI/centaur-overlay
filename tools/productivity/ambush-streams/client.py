@@ -175,26 +175,14 @@ class AmbushStreamsClient:
     def create_stream(
         self,
         *,
-        prompt: str | None = None,
-        base_stream_id: str | None = None,
+        prompt: str,
         name: str | None = None,
     ) -> dict[str, Any]:
-        """Create one stream from a prompt, a base stream, or both."""
-        clean_prompt = _optional_text(prompt, "prompt", MAX_PROMPT_LENGTH)
-        clean_base_stream_id = (
-            _guid(base_stream_id, "base_stream_id")
-            if base_stream_id is not None
-            else None
-        )
+        """Create one stream from a focused monitoring prompt."""
+        clean_prompt = _required_text(prompt, "prompt", MAX_PROMPT_LENGTH)
         clean_name = _optional_text(name, "name", MAX_STREAM_NAME_LENGTH)
-        if clean_prompt is None and clean_base_stream_id is None:
-            raise ValueError("prompt or base_stream_id is required")
 
-        body: dict[str, Any] = {}
-        if clean_prompt is not None:
-            body["prompt"] = clean_prompt
-        if clean_base_stream_id is not None:
-            body["base_feed_id"] = clean_base_stream_id
+        body: dict[str, Any] = {"prompt": clean_prompt}
         if clean_name is not None:
             body["name"] = clean_name
         return self._request("POST", "/feeds", json=body)

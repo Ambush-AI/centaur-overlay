@@ -97,18 +97,14 @@ def get_stream(
 
 @app.command("create")
 def create_stream(
-    prompt: str | None = typer.Option(None, help="Focused monitoring prompt."),
+    prompt: str = typer.Option(..., help="Focused monitoring prompt."),
     name: str | None = typer.Option(None, help="Optional display name."),
-    base_stream_id: str | None = typer.Option(
-        None, help="Optional base stream UUID (sent as base_feed_id)."
-    ),
 ) -> None:
-    """Create one shared stream from a prompt, a base stream, or both."""
+    """Create one shared stream from a focused monitoring prompt."""
     _run(
         lambda client: client.create_stream(
             prompt=prompt,
             name=name,
-            base_stream_id=base_stream_id,
         )
     )
 

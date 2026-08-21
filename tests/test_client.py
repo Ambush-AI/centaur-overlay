@@ -146,7 +146,6 @@ def test_create_stream_maps_public_terminology_to_legacy_api_fields() -> None:
     client.create_stream(
         name=" AI policy ",
         prompt=" New AI rules in Canada ",
-        base_stream_id=STREAM_ID,
     )
 
     assert fake_http.calls == [
@@ -157,20 +156,19 @@ def test_create_stream_maps_public_terminology_to_legacy_api_fields() -> None:
             "json": {
                 "name": "AI policy",
                 "prompt": "New AI rules in Canada",
-                "base_feed_id": STREAM_ID,
             },
         }
     ]
 
 
-def test_create_stream_requires_prompt_or_base_stream() -> None:
+def test_create_stream_requires_prompt() -> None:
     module = load_client_module()
     client = module.AmbushStreamsClient(
         api_key="test-key", http_client=FakeHttpClient()
     )
 
-    with pytest.raises(ValueError, match="prompt or base_stream_id"):
-        client.create_stream(name="Name only")
+    with pytest.raises(ValueError, match="prompt is required"):
+        client.create_stream(prompt="  ", name="Name only")
 
 
 def test_update_stream_validates_status_and_maps_route() -> None:

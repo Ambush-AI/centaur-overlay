@@ -54,6 +54,10 @@ class FakeClient:
         self.calls.append(("list_streams", kwargs))
         return {"feeds": [], "next_cursor": None}
 
+    def create_stream(self, **kwargs: Any) -> dict[str, Any]:
+        self.calls.append(("create_stream", kwargs))
+        return {"feed_id": STREAM_ID, "status": "active"}
+
     def update_stream(self, stream_id: str, **kwargs: Any) -> dict[str, Any]:
         self.calls.append(("update_stream", {"stream_id": stream_id, **kwargs}))
         return {"feed_id": stream_id, "status": kwargs["status"]}
@@ -91,6 +95,34 @@ def test_list_maps_cli_options(monkeypatch) -> None:
 
     assert result.exit_code == 0, result.output
     assert client.calls == [("list_streams", {"limit": 7, "cursor": "next-page"})]
+
+
+def test_create_requires_and_maps_prompt(monkeypatch) -> None:
+    cli = load_cli_module()
+    client = FakeClient()
+    monkeypatch.setattr(cli, "_client", lambda: client)
+    runner = CliRunner()
+
+    missing = runner.invoke(cli.app, ["create", "--name", "AI policy"])
+    created = runner.invoke(
+        cli.app,
+        [
+            "create",
+            "--prompt",
+            "New AI rules in Canada",
+            "--name",
+            "AI policy",
+        ],
+    )
+
+    assert missing.exit_code != 0
+    assert created.exit_code == 0, created.output
+    assert client.calls == [
+        (
+            "create_stream",
+            {"prompt": "New AI rules in Canada", "name": "AI policy"},
+        )
+    ]
 
 
 def test_pause_and_resume_use_explicit_statuses(monkeypatch) -> None:
