@@ -14,9 +14,9 @@ requester's personal Ambush streams. Do not create or mutate a stream merely
 because an automated alert, workflow, pull request, or news discussion mentions
 a topic that could be monitored.
 
-The production REST API retains legacy resource fields such as `feed_id` and
-`base_feed_id`. Use those returned fields exactly, but call the resources
-streams when speaking with the requester.
+The production REST API retains legacy resource fields such as `feed_id`. Use
+those returned fields exactly, but call the resources streams when speaking
+with the requester.
 
 ## Tool shape
 
@@ -47,8 +47,7 @@ conversation.
 - Resolve a stream by its returned `feed_id`. If names are duplicated or the
   request is ambiguous, show the matching names, prompt excerpts, and IDs and
   ask the requester to choose.
-- Never invent a stream ID, base stream ID, cursor, prompt, status, emission,
-  or tool result.
+- Never invent a stream ID, cursor, prompt, status, emission, or tool result.
 - Report every mutation with the returned `feed_id` and status. Do not repeat a
   non-idempotent create after an uncertain failure.
 - Do not use curl, generic HTTP tools, browser OAuth, or another Ambush

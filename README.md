@@ -46,7 +46,7 @@ overlays:
       ref: <your-pinned-centaur-ref>
 
     - repo: Ambush-AI/centaur-overlay
-      ref: v0.1.0
+      ref: v0.1.1
       visibility: public
       toolsSubdir: tools
       workflowsSubdir: ""
@@ -56,7 +56,7 @@ overlays:
       ref: main
 ```
 
-`v0.1.0` is the stable, immutable overlay release. Track `main` only when you
+`v0.1.1` is the stable, immutable overlay release. Track `main` only when you
 deliberately want unreleased changes. See
 [`examples/centaur-values.yaml`](examples/centaur-values.yaml) for a copyable
 fragment.
